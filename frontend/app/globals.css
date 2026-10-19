@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Semantic colour tokens as RGB channels (so Tailwind can apply alpha).
+ * Light theme on :root, dark theme (the default, set on <html>) on .dark.
+ * Text/background pairs below meet WCAG AA (4.5:1) for body text.
+ */
+:root {
+  --bg: 246 242 233; /* warm paper */
+  --surface: 255 253 248;
+  --surface-2: 238 232 219;
+  --border: 214 205 186;
+  --ink: 20 27 46; /* deep navy text: 14:1 on bg */
+  --muted: 79 87 107; /* 6.6:1 on surface */
+  --amber: 236 165 38; /* platform-light fill; text on it uses --on-amber */
+  --on-amber: 26 18 4;
+  --amber-text: 135 79 0; /* amber used as text: 5.6:1 on surface */
+  --danger: 176 34 26;
+  --success: 22 116 68;
+  --info: 29 92 168;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: 7 12 24; /* ink-navy night */
+  --surface: 15 23 42;
+  --surface-2: 25 35 59;
+  --border: 45 58 88;
+  --ink: 236 233 224; /* 15:1 on bg */
+  --muted: 163 173 194; /* 7.9:1 on surface */
+  --amber: 245 185 66;
+  --on-amber: 26 18 4;
+  --amber-text: 247 199 102;
+  --danger: 255 140 128;
+  --success: 120 222 166;
+  --info: 140 190 255;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    @apply bg-bg text-ink antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply min-h-dvh bg-bg font-sans text-ink;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+  /* Fieldsets default to min-width: min-content, which lets horizontally scrolling rows widen the page. */
+  fieldset {
+    min-width: 0;
+  }
+  :focus-visible {
+    outline: 3px solid rgb(var(--amber));
+    outline-offset: 2px;
+    border-radius: 0.6rem;
+  }
+  ::selection {
+    background: rgb(var(--amber) / 0.35);
+  }
+}
+
+@layer components {
+  .glow-amber {
+    background: radial-gradient(60% 60% at 50% 40%, rgb(var(--amber) / 0.22), transparent 70%);
+  }
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.16em] text-amber-text;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
